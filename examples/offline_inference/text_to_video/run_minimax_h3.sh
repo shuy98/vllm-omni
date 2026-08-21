@@ -23,6 +23,7 @@ export VLLM_OMNI_VIDEO_SYNC_TIMEOUT="${VLLM_OMNI_VIDEO_SYNC_TIMEOUT:-14400}"
 cd "${REPO_ROOT}"
 exec "${PYTHON}" "${SCRIPT_DIR}/text_to_video.py" \
   --model "${MODEL}" \
+  --task-type t2va \
   --prompt "${PROMPT}" \
   --enable-cpu-offload \
   --tensor-parallel-size 2 \

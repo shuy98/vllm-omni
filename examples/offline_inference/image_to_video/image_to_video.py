@@ -103,6 +103,12 @@ def parse_args() -> argparse.Namespace:
         help="Override model class name (LTX checkpoints default to LTX2Pipeline).",
     )
     parser.add_argument(
+        "--task-type",
+        choices=["auto", "combined", "t2va", "fl2va", "ref2va"],
+        default=None,
+        help="Model-defined startup task type. For MiniMax H3, use fl2va to skip Ref2VA weights.",
+    )
+    parser.add_argument(
         "--deploy-config",
         default=None,
         help="Optional deploy config YAML to use for pipeline-backed runs.",
@@ -507,6 +513,8 @@ def main():
         enable_diffusion_pipeline_profiler=args.enable_diffusion_pipeline_profiler,
         profiler_config=args.profiler_config,
     )
+    if args.task_type is not None:
+        omni_kwargs["task_type"] = args.task_type
     if args.deploy_config:
         omni_kwargs["deploy_config"] = args.deploy_config
     if flow_shift is not None:
